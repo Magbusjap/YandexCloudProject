@@ -206,21 +206,11 @@
 ---
 ## Настройка переменных окружения n8n
 
-  Обновите ваш docker-compose.yml так, чтобы он использовал доменное имя и https
-  - `version: "3"
-    services:
-      n8n:
-        image: n8nio/n8n
-        restart: always
-        ports:
-          - "5678:5678"
-        environment:
-          - N8N_HOST=вашдомен.ru
-          - N8N_PORT=5678
-          - N8N_PROTOCOL=https
-          - WEBHOOK_TUNNEL_URL=https://вашдомен.ru
-        volumes:
-          - ~/.n8n:/home/node/.n8n`
+  Обновите ваш docker-compose.yml так, чтобы он использовал доменное имя и https:
+  - `N8N_HOST=вашдомен.ru`
+  - `N8N_PROTOCOL=https`
+  - `WEBHOOK_TUNNEL_URL=https://вашдомен.ru`
+
     
 
 
