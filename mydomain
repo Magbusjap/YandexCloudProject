@@ -1,0 +1,30 @@
+# Перенаправление HTTP на HTTPS
+server {
+    listen 80;
+    server_name mydomain.ru www.mywebsite.ru;
+    return 301 https://$host$request_uri;
+}
+
+# Конфигурация HTTPS
+server {
+    listen 443 ssl;
+    server_name mydomain.ru www.mydomain.ru;
+
+    # Путь к файлам сертификатов (укажите реальные имена ваших файлов)
+    ssl_certificate /etc/ssl/bozheslav-ai.ru/certificate.crt;
+    ssl_certificate_key /etc/ssl/bozheslav-ai.ru/certificate.key;
+    ssl_trusted_certificate /etc/ssl/bozheslav-ai.ru/certificate_ca.crt;
+
+    # Дополнительные настройки SSL
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    # Проксирование запросов к n8n (предполагается, что n8n запущен на localhost:5678)
+    location / {
+        proxy_pass http://127.0.0.1:5678;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
